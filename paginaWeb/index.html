@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <title> Datos de los Clientes</title>
     <style>
-        body { font-family: sans-serif; margin: 2rem; background-color:rgb(234, 155, 81) }
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            padding: 2rem;
+            background-color: rgb(234, 155, 81); 
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra los elementos horizontalmente */
+            justify-content: flex-start;
+            min-height: 100vh;
+        }        
+        #btnCargar {
+            padding: 0.8rem 1.5rem;   /* Más espacio interno (arriba/abajo y costados) */
+            font-size: 1.1rem;       /* Texto más grande */
+            border-radius: 8px;      /* Bordes redondeados */
+            cursor: pointer;         /* Cambia la manito al pasar por encima */
+            border: 2px solid #333;
+            background-color: #ffffff;
+        }
         .card { border: 1px solid #ccc; padding: 1rem; margin-top: 1rem; width: 300px; border-radius: 8px; background-color: white; }
         .error { color: red; }
     </style>
