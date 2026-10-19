@@ -1,0 +1,6 @@
+docker compose up -d
+docker compose exec -it node-dev bash
+
+Al terminar:
+
+docker compose down
