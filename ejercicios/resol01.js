@@ -39,13 +39,22 @@ const estudiantesConPromedio = estudiantes.map(estudiante =>{const promedio = (e
   condicion:condicion
   };
 });    // VERSION CON RETURN
-const listaEstudiantes = estudiantesConPromedio.map(estudiante => 
-  (`<li> ${estudiante.nombre}-promedio:${ estudiante.promedio } (${estudiante.condicion }) </li>`)) 
-const textoHTML = listaEstudiantes.join('');
+
+/* aca transformamos el array de objetos en un array de strings de HTML,
+ donde cada elemento es una etiqueta <li> con los datos del alumno ya interpolados. */
+
+
+const listaEstudiantes = estudiantesConPromedio.map(estudiante =>
+  (`<li> ${estudiante.nombre} - promedio: ${ estudiante.promedio } (${estudiante.condicion }) </li>`))
+const textoHTML = "<ul> \n"+ listaEstudiantes.join('\n')+ "\n</ul>";  // joinea en la cadena textoHTML.
 console.log('--- ESTUDIANTES ---');
-console.log(textoHTML);
-console.table(estudiantesConPromedio);
+console.log(textoHTML);    
+console.table(estudiantesConPromedio);  
 /*
+
+SIN RETURN : Para evitar que JavaScript piense que es un bloque de función y 
+obligarlo a entender que querés devolver un objeto, se envuelve todo el objeto entre paréntesis:
+
 const estudiantesConPromedio = estudiantes.map(estudiante => ({
   ...estudiante, 
   promedio: (estudiante.parcial1 + estudiante.parcial2) / 2,
