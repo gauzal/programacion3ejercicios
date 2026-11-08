@@ -2,5 +2,5 @@ paginaWeb/baseDatosWeb
 paginaWeb/api/node_modules
 paginaWeb/api/package-lock.json
 mobileApp/backEnd/baseDatosWeb
-mobileApp/backEnd/node_modules
+mobileApp/backEnd/api-base/node_modules/
 mobileApp/backEnd/api-base/package-lock.json
