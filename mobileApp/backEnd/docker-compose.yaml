@@ -1,0 +1,28 @@
+# Para correr servidores: 
+# > docker compose up -d
+services:
+  db:
+    image: mysql:8.4.2
+    container_name: db_mobileapp
+    environment:
+      MYSQL_ROOT_PASSWORD: admin1234
+      MYSQL_DATABASE: datos
+      MYSQL_USER: prog3
+      MYSQL_PASSWORD: admin123
+    volumes:
+      - ./baseDatosWeb:/var/lib/mysql
+      - ./clientes.sql:/docker-entrypoint-initdb.d/clientes.sql
+    ports:
+      - "3306:3306"
+
+  backend:
+    image: node:20-alpine
+    container_name: node-backend_mobileapp
+    working_dir: /usr/src/app
+    volumes:
+      - ./api-base:/usr/src/app   #local / imagen en docker
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm start"
+    depends_on:
+      - db
