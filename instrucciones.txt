@@ -1,6 +1,21 @@
 docker compose up -d
-docker compose exec -it node-dev bash
+docker compose exec -it node-dev bash //docker exec -it node-dev bash
 
 Al terminar:
 
 docker compose down
+
+
+nombre de contenedor y nombre de yaml 
+con docker compose exec va el nombre del servicio en yamls , ejemplo: db
+sino docker exec nombre del contenedor
+
+
+mysql -p -u prog3
+
+-p pide password
+-u especifica el usuario de conexion
+
+para cualquier comando ejemplo: ls
+--help  muestra los switches disponibles.
+
