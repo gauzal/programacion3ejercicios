@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 });
 // Endpoint expuesto en /api/base/
 app.get('/api/base/', (req, res) => {
- /*promesa*/ pool.query('SELECT id, descripcion, marca, stock FROM productos01')
+ /*promesa*/ pool.query('SELECT id, descripcion, marca, stock, precio  FROM productos01')
     .then(([rows]) => {
       
         console.log ("Conectando con: ", mysql.host );

@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
   SafeAreaView,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 // URL del endpoint que consulta la base de datos
 const API_URL = 'http://192.168.68.34:3000/api/base/';
@@ -16,6 +17,13 @@ export default function App() {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
+  const [busqueda, setBusqueda] = useState('');
+
+  const productosFiltrados = productos.filter(item =>
+    item.marca.toLowerCase().includes(busqueda.toLowerCase()) ||                   
+    item.descripcion.toLowerCase().includes(busqueda.toLowerCase())
+  ); 
+
   // Función que consulta el endpoint remoto mediante Promesas (.then / .catch)
   const consultarProductos = () => {
     setCargando(true);
@@ -50,7 +58,9 @@ export default function App() {
   }, []);
   // Función encargada de dibujar cada fila de la tabla productos01
   const renderProducto = ({ item }) => {
+    console.log("Producto recibido:", item);
     const sinStock = Number(item.stock) === 0;
+    const alertaStock = Number(item.stock) > 0 && Number(item.stock)<= 5 ;
     return (
       <View style={styles.card}>
         <View style={styles.cardHeader}>
@@ -58,12 +68,13 @@ export default function App() {
           <Text style={styles.marcaTexto}>{item.marca}</Text>
         </View>
         <Text style={styles.descripcionTexto}>{item.descripcion}</Text>
+        <Text style={styles.precioTexto}>$ {item.precio}</Text>
         <View style={styles.cardFooter}>
           <Text style={[
             styles.stockBadge,
-            sinStock ? styles.sinStock : styles.conStock
+            sinStock ? styles.sinStock : (alertaStock ? styles.alertaStock : styles.conStock)
           ]}>
-            {sinStock ? 'SIN STOCK' : `Stock: ${item.stock} unidades`}
+            {sinStock ? 'SIN STOCK' : (alertaStock ? `¡Últimas ${item.stock} unidades!` : `Stock: ${item.stock} unidades`)}
           </Text>
         </View>
       </View>
@@ -76,6 +87,15 @@ export default function App() {
         <Text style={styles.titulo}>Catálogo de Productos</Text>
         <Text style={styles.subtitulo}>Tabla: productos01 | Origen:
           https://progra3/api/base/</Text>
+        <Text style={styles.subtitulo}>Total en catalogo: {productos.length} productos</Text>
+        <TextInput 
+                  value={busqueda}
+                  onChangeText={setBusqueda}
+                  placeholder="Buscar por marca o descripción..."
+        />
+        <TouchableOpacity style={styles.botonReintentar} onPress={consultarProductos}>
+          <Text style={styles.textoBoton}>Actualizar</Text>
+        </TouchableOpacity>
       </View>
       {cargando ? (
         <View style={styles.centro}>
@@ -91,7 +111,7 @@ export default function App() {
         </View>
       ) : (
         <FlatList
-          data={productos}
+          data={productosFiltrados}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderProducto}
           contentContainerStyle={styles.lista}
@@ -163,6 +183,12 @@ const styles = StyleSheet.create({
     color: '#243b53',
     marginBottom: 12,
   },
+     precioTexto: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#050244',
+    marginBottom: 12,
+  },
   cardFooter: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -181,6 +207,10 @@ const styles = StyleSheet.create({
   sinStock: {
     backgroundColor: '#fed7d7',
     color: '#742a2a',
+  },
+  alertaStock: {
+    backgroundColor: '#feebc8',   
+    color: '#f58412',
   },
   centro: {
     flex: 1,
